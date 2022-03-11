@@ -88,9 +88,7 @@ class LivreController extends Controller{
      */
     public function delete ($_id) {
         // action de suppr un livre en bdd
-        var_dump($this);
         $livre = Livre::select($_id);
-        var_dump($livre);
         $livre->delete();
         return $this->index();
     }
