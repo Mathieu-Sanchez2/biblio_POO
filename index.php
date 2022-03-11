@@ -1,10 +1,10 @@
 <?php 
+    session_start();
     // var_dump($_GET);
     require_once 'autoloader.php';
-    
-    // TODO: création d'un objet générateur de lien pour créer des urls rapidement et facilement (rapide)
+
     // TODO: voir la page index et login du module d'administration
-    // TODO: création du site (rapide)
+    // TODO: voir config
 
     // si il existe un controller a instancier
     if (isset($_GET['controller'])) {
@@ -26,5 +26,5 @@
         }
     }else{
         // SINON par défaut la page a afficher est l'index du module livre (pour le moment)
-        (new LivreController())->index(); // syntaxe pour ne pas avoir a stocker un objet dans une variable pour utiliser une méthode
+        (new SiteController())->index(); // syntaxe pour ne pas avoir a stocker un objet dans une variable pour utiliser une méthode
     }

@@ -16,6 +16,12 @@ class LivreController extends Controller{
     public function index(){
         // verif si l'user peut voir la page ou pas
         // doit demander au model livre de recup les livres en BDD
+        if (!Utilisateur::isConnect()){
+            // redirection vers l'index du site web
+            return (new SiteController())->render('index');
+            // redirection vers le login de l'admin
+            // (new AdminController())->render('login');
+        }
         $livres = Livre::select();
         // var_dump($livres);
         // var_dump(compact('livres', 'salut'));

@@ -8,10 +8,6 @@ class Controller {
     public $path_view_communes = 'view/commun/';
 
     // METHODES 
-    // public function __construct(){
-
-    // }
-    
     /**
      * render
      *  Permet de rendre une vue, avec possibilité de passer des informations

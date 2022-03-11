@@ -15,8 +15,8 @@
             <td><?= $livre->id  ?></td>
             <td><?= $livre->titre  ?></td>
             <td><?= substr($livre->resume,0, 75)  ?></td>
-            <td><a href="index.php?controller=LivreController&methode=update&id=<?= $livre->id ?>" class="btn btn-warning">Modifier</a></td>
-            <td><a href="index.php?controller=LivreController&methode=delete&id=<?= $livre->id ?>" class="btn btn-danger">Supprimer</a></td>
+            <td><a href="<?= LienHelper::getLien('LivreController', 'update', $livre->id) ?>" class="btn btn-warning">Modifier</a></td>
+            <td><a href="<?= LienHelper::getLien('LivreController', 'delete', $livre->id) ?>" class="btn btn-danger">Supprimer</a></td>
         </tr>
     <?php endforeach; ?>
   </tbody>

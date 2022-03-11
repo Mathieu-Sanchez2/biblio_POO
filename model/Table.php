@@ -3,7 +3,7 @@
 class Table {
     // ATTRIBUTES
     // permet de stocker la table sur laquelle nous devont intéragir
-    public static $nom;
+    public static $table;
     // permet de stocker l'objet PDO de php
     public static $pdo;
 
@@ -40,8 +40,8 @@ class Table {
      * @return void
      */
     public static function getNomTable() {
-        self::$nom = strtolower(get_called_class());
-        return self::$nom;
+        self::$table = strtolower(get_called_class());
+        return self::$table;
     }
     /**
      * select()
