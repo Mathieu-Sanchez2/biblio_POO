@@ -118,9 +118,52 @@ class Livre extends Table{
      * @return string
      */
     public function getSrcIllustration() : string {
-        // pour un retour dynamique !
-        // return 'img/illustration/' . $this->illustration;
-        return 'img/illustration/harry_potter_illustration.jpg';
+        return 'img/illustration/' . $this->illustration;
+    }
+    
+    /**
+     * addIllustration
+     * Permet d'ajouter une illustration dans le dossier img/illustration/
+     * @param  array $_files
+     * @return bool
+     */
+    public static function addIllustrationOnDir(array $_files) : bool {
+        // GESTION DE L'ILLUSTRATION
+        // on enregistre le nom de l'illustration
+        $illustration  = $_files['illustration']['name'];
+        // on enregistre le type (l'extension)
+        $illustration_type  = $_files['illustration']['type'];
+        // on enregistre l'endroit ou est le fichier a récuperer
+        $dossier_temporaire  = $_files['illustration']['tmp_name'];
+        // on enregistre l'endroit de destination
+        $dossier_destination  = 'img/illustration/' . $illustration;
+        // on deplace l'illustration dans le dossier de destination
+        if (!move_uploaded_file($dossier_temporaire, $dossier_destination)){
+            // erreur illustration non déplacé
+            return false;
+        }
+        // img bien déplacé
+        return true;
+    }
+
+     /**
+     * removeIllustration
+     * Permet d'ajouter une illustration dans le dossier img/illustration/
+     * @param  mixed $_files
+     * @return string
+     */
+    public static function removeIllustrationOnDir(string $_files) : bool {
+        $chemin_illustration = 'img/illustration/' . $_files;
+        // si l'illustration existe
+        if (is_file($chemin_illustration)){
+            // on supprime l'illustration       
+            if (unlink($chemin_illustration)){
+                // img bien suppr
+                return true;
+            }
+        }
+        // erreur dans la suppresion de l'illustration
+        return false;
     }
 
 }

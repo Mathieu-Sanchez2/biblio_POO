@@ -65,9 +65,20 @@ class LivreController extends Controller{
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
+        // var_dump($_POST, $_FILES);
+        // TRAITEMENT DE L'IMAGE
+        // on passe $_FILES pour que la fonction récupere les données du formulaire
+        if (!Livre::addIllustrationOnDir($_FILES)) {
+            // erreur : illustration non déplacé
+            die('deplacement illustration nok');
+            // avec message d'information oui||non ? compact() ?
+            return $this->add();
+        };
         // Permet de valider les données recu du formulaire d'ajout et de faire l'insertion en BDD
-        // var_dump($_POST);
         $livre = new Livre($_POST);
+        // var_dump($livre);
+        // ne pas oublier d'indiquer l'illustration car c'est $_FILES et pas $_POST qui a l'info
+        $livre->illustration = $_FILES['illustration']['name'];
         // var_dump($livre);
         if($livre->insert()){
             // avec message d'information oui||non ? compact() ?
@@ -105,13 +116,35 @@ class LivreController extends Controller{
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
-        // Permet de valider les données recu du formulaire de modification et de faire l'update en BDD
-        // var_dump($_POST);
         $livre = new Livre($_POST);
-        // var_dump($livre);
+        var_dump($livre, $_FILES);
+        // si on a un nom et un fichier dans illustration alors on fait le traitement
+        if (!empty($_FILES['illustration']['name']) && !empty($_FILES['illustration']['tmp_name'])) {
+            // TRAITEMENT DE L'IMAGE
+            $livre->illustration = $_FILES['illustration']['name'];
+            // on recupere l'ancienne illustration
+            $hold_illustration = (Livre::select($livre->id))->illustration;
+            // on passe $_FILES pour que la fonction récupere les données du formulaire
+            if (!Livre::removeIllustrationOnDir($hold_illustration)) {
+                // erreur : illustration non déplacé
+                die('suppr illustration nok');
+                // avec message d'information oui||non ? compact() ?
+                return $this->update($livre->id);
+            };
+            // on passe $_FILES pour que la fonction récupere les données du formulaire
+            if (!Livre::addIllustrationOnDir($_FILES)) {
+                // erreur : illustration non déplacé
+                die('deplacement illustration nok');
+                // on redirige vers la page de modification (avec message?)
+                return $this->update($livre->id);
+            };
+        }
+        // on modifie le livre en bdd
         if ($livre->update()){
+            // on redirige vers la page d'index (avec message?)
             return $this->index();
         }
+        // on redirige vers la page de modification (avec message?)
         return $this->update($livre->id);
     }
         
