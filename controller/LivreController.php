@@ -9,6 +9,9 @@ class LivreController extends Controller{
      * @return void
      */
     public function __construct() {
+        // on utilise parent::__construct() pour utiliser le constructeur du parent (ici Controller.php)
+        // Ici cela nous sert a récuperer l'etat de la connexion (vrai ou faux) grâce a l'appel dans le constructeur de Controller.php
+        parent::__construct();
         $this->path_view = 'view/livre/';
         $this->path_view_communes = 'view/commun/admin/';
     }
@@ -19,6 +22,10 @@ class LivreController extends Controller{
      * @return string
      */
     public function index() : string {
+        if (!$this->connexion){
+            // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
+            return (new AdminController)->render('login');
+        }
         // verif si l'user peut voir la page ou pas
         // doit demander au model livre de recup les livres en BDD
         if (!Utilisateur::isConnect()){
@@ -40,6 +47,10 @@ class LivreController extends Controller{
      * @return string
      */
     public function add() : string {
+        if (!$this->connexion){
+            // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
+            return (new AdminController)->render('login');
+        }
         // retourne la vue qui contient le formulaire pour ajouter un livre en bdd
         return $this->render('add');
     } 
@@ -50,6 +61,10 @@ class LivreController extends Controller{
      * @return string
      */
     public function addValidPostForm() : string {
+        if (!$this->connexion){
+            // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
+            return (new AdminController)->render('login');
+        }
         // Permet de valider les données recu du formulaire d'ajout et de faire l'insertion en BDD
         // var_dump($_POST);
         $livre = new Livre($_POST);
@@ -70,6 +85,10 @@ class LivreController extends Controller{
      * @return string
      */
     public function update (string $_id) : string {
+        if (!$this->connexion){
+            // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
+            return (new AdminController)->render('login');
+        }
         // retourne la vue qui contient le formulaire de modification
         $livre = Livre::select($_id);
         // var_dump($livre);
@@ -82,6 +101,10 @@ class LivreController extends Controller{
      * @return string
      */
     public function updateValidForm() : string {
+        if (!$this->connexion){
+            // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
+            return (new AdminController)->render('login');
+        }
         // Permet de valider les données recu du formulaire de modification et de faire l'update en BDD
         // var_dump($_POST);
         $livre = new Livre($_POST);
@@ -99,6 +122,10 @@ class LivreController extends Controller{
      * @return string
      */
     public function single(string $_id) : string {
+        if (!$this->connexion){
+            // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
+            return (new AdminController)->render('login');
+        }
         $livre = Livre::select($_id);
         return $this->render('single', compact('livre'));
     }
@@ -109,6 +136,10 @@ class LivreController extends Controller{
      * @return string
      */
     public function delete (string $_id) : string {
+        if (!$this->connexion){
+            // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
+            return (new AdminController)->render('login');
+        }
         // action de suppr un livre en bdd
         $livre = Livre::select($_id);
         $livre->delete();

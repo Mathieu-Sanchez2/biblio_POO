@@ -5,6 +5,8 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Libelle</th>
+        <th scope="col">Nombre d'utilisateur(s) avec le role</th>
+        <th scope="col">Fiche</th>
         <th scope="col">Modifier</th>
         <th scope="col">Supprimer</th>
       </tr>
@@ -14,8 +16,10 @@
           <tr>
               <td><?= $role->id ?></td>
               <td><?= $role->libelle ?></td>
-              <td><a href="http://localhost/biblio_POO/index.php?controller=RoleController&methode=update&id=<?= $role->id ?>" class="btn btn-warning">Modifier</a></td>
-              <td><a href="http://localhost/biblio_POO/index.php?controller=RoleController&methode=delete&id=<?= $role->id ?> " class="btn btn-danger">Supprimer</a></td>
+              <td><?= $role->getNombreUtilisateurs(); ?></td>
+              <td><a href="<?= LienHelper::getLien('RoleController','single', $role->id); ?>" class="btn btn-primary">Fiche</a></td>
+              <td><a href="<?= LienHelper::getLien('RoleController','update', $role->id); ?>" class="btn btn-warning">Modifier</a></td>
+              <td><a href="<?= LienHelper::getLien('RoleController','delete', $role->id); ?> " class="btn btn-danger">Supprimer</a></td>
           </tr>
       <?php endforeach; ?>
     </tbody>

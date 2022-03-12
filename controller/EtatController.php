@@ -1,7 +1,8 @@
-<?php
+<?php 
 
-class RoleController extends Controller {
-    
+class EtatController extends Controller {
+
+        
     /**
      * __construct
      *
@@ -10,14 +11,14 @@ class RoleController extends Controller {
     public function __construct() {
         // on utilise parent::__construct() pour utiliser le constructeur du parent (ici Controller.php)
         // Ici cela nous sert a récuperer l'etat de la connexion (vrai ou faux) grâce a l'appel dans le constructeur de Controller.php
-        parent::__construct();
-        $this->path_view = 'view/role/';
+        parent::__construct();   
+        $this->path_view = 'view/etat/';
         $this->path_view_communes = 'view/commun/admin/';
     }
     
     /**
      * index
-     * permet de retourner la vue pour avoir la liste des roles
+     * Permet d'afficher la page index du module etat
      * @return string
      */
     public function index() : string {
@@ -25,15 +26,13 @@ class RoleController extends Controller {
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
-        $roles = Role::select();
-        // var_dump($roles);
-        return $this->render('index', compact('roles'));
+        $etats = Etat::select();
+        return $this->render('index', compact('etats'));
     }
-    
     
     /**
      * single
-     * permet d'afficher la vue qui donne les informations sur un role
+     * Permet d'afficher la fiche d'un etat
      * @param  string $_id
      * @return string
      */
@@ -42,14 +41,13 @@ class RoleController extends Controller {
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
-        $role = Role::select($_id);
-        // var_dump($role);
-        return $this->render('single', compact('role'));
-    }       
+        $etat = Etat::select($_id);
+        return $this->render('single', compact('etat'));
+    }
     
     /**
      * add
-     * Permet d'afficher le formulaire d'ajout d'un role
+     * Permet d'afficher le formulaire d'ajout d'un etat
      * @return string
      */
     public function add() : string {
@@ -59,10 +57,10 @@ class RoleController extends Controller {
         }
         return $this->render('add');
     }
-        
+    
     /**
      * addValidPostForm
-     * Permet de valider les données recu du formulaire d'ajout
+     * Recupere et traite les données recu du formulaire d'ajout d'un etat
      * @return string
      */
     public function addValidPostForm() : string {
@@ -72,13 +70,12 @@ class RoleController extends Controller {
         }
         var_dump($_POST);
         die('addValidPostForm');
-        return $this->render('add');
     }
     
     /**
      * update
-     * Permet de retourner la vue qui contient le formulaire de modification avec les informations bdd
-     * @param  string $_id
+     * Permet d'afficher le formulaire de modification avec les informations d'un etat
+     * @param string $_id
      * @return string
      */
     public function update(string $_id) : string {
@@ -86,13 +83,13 @@ class RoleController extends Controller {
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
-        $role = Role::select($_id);
-        return $this->render('update', compact('role'));
+        $etat = Etat::select($_id);
+        return $this->render('update', compact('etat'));
     }
-
+    
     /**
      * updateValidPostForm
-     * Permet de valider les données recu du formulaire de modification
+     * Recupere et traite les données recu du formulaire de modification d'un etat
      * @return string
      */
     public function updateValidPostForm() : string {
@@ -102,26 +99,24 @@ class RoleController extends Controller {
         }
         var_dump($_POST);
         die('updateValidPostForm');
-        $role = new Role($_POST);
-        $role->update();
-        // avec message d'information oui||non ? compact() ?
-        return $this->render('update');
-    }    
+    }
+    
     /**
      * delete
-     * Permet de supprimer un role en bdd
+     * Permet de supprimer un etat en bdd
      * @param string $_id
      * @return string
      */
     public function delete(string $_id) : string {
-        if (!$this->connexion){
+                if (!$this->connexion){
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
-        // model pour supprimer ?
-        $role = Role::select($_id);
-        $role->delete();
-        // message d'erreur ?
+        // action de suppr un etat en bdd
+        $etat = Etat::select($_id);
+        $etat->delete();
         return $this->index();
     }
+
+
 }

@@ -29,4 +29,18 @@ class Categorie extends Table{
     public function getLivres() {
         
     }
+    
+    /**
+     * getNombreLivres
+     * Retourne le nombre de livre lié a une catégorie
+     * @return string
+     */
+    public function getNombreLivres() : string {
+        $sql = 'SELECT COUNT(id_livre) FROM categorie_livre WHERE id_categorie = ' . $this->id;
+        $req = self::getPDO()->query($sql);
+        // var_dump($req->fetch(PDO::FETCH_NUM));
+        // var_dump($req->fetch(PDO::FETCH_NUM)[0]);
+        // on retourne directement la valeur
+        return $req->fetch(PDO::FETCH_NUM)[0];
+    }
 }

@@ -3,17 +3,17 @@
 
 class AdminController extends Controller {
 
-    // Attr qui stock l'etat d'une connexion
-    public bool $connexion = false;
     
     /**
      * __construct
      * @return void
      */
     public function __construct() {
+        // on utilise parent::__construct() pour utiliser le constructeur du parent (ici Controller.php)
+        // Ici cela nous sert a récuperer l'etat de la connexion (vrai ou faux) grâce a l'appel dans le constructeur de Controller.php
+        parent::__construct();
         $this->path_view = 'view/admin/';
         $this->path_view_communes = 'view/commun/admin/';
-        $this->connexion = Utilisateur::isConnect();
     }
     
     /**
@@ -38,7 +38,7 @@ class AdminController extends Controller {
      */
     public function login() : string {
         if ($this->connexion){
-            // si l'utilisateur est déjà connecté ont le redirige vers l'index de l'administration
+            // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return $this->render('index');
         }
         return $this->render('login');
@@ -50,6 +50,10 @@ class AdminController extends Controller {
      * @return string
      */
     public function logout() : string {
+        if (!$this->connexion){
+            // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
+            return $this->render('login');
+        }
         // on recupere notre utilisateur sous forme d'objet (enregistrer au format string dans la session lors de la connexion)
         $utilisateur = unserialize($_SESSION['utilisateur']);
         // deconnexion de l'utilisateur

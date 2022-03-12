@@ -5,9 +5,16 @@ class SiteController extends Controller {
     // ATTRR
     
 
-    // METHODES
-    public function __construct()
-    {
+    // METHODES    
+    /**
+     * __construct
+     *
+     * @return void
+     */
+    public function __construct() {
+        // on utilise parent::__construct() pour utiliser le constructeur du parent (ici Controller.php)
+        // Ici cela nous sert a récuperer l'etat de la connexion (vrai ou faux) grâce a l'appel dans le constructeur de Controller.php
+        parent::__construct();
         $this->path_view = 'view/site/';
         $this->path_view_communes = 'view/commun/site/';
     }

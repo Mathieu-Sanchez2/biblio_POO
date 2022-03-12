@@ -27,4 +27,16 @@ class Etat extends Table {
     public function getLivre() {
         
     }
+    
+    /**
+     * getNombreLivres
+     * Retourne le nombre de livre lié a un etat
+     * @return string
+     */
+    public function getNombreLivres() : string {
+        $sql = 'SELECT COUNT(id_livre) FROM etat_livre WHERE id_etat = ' . $this->id;
+        $req = self::getPDO()->query($sql);
+        // on retourne directement la valeur
+        return $req->fetch(PDO::FETCH_NUM)[0];
+    }
 }

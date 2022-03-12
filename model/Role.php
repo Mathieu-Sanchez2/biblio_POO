@@ -30,4 +30,16 @@ class Role extends Table {
         public function getUsers() {
                 
         }
+
+        /**
+         * getNombreUtilisateur
+         * Retourne le nombre d'utilisateur lié a un etat
+         * @return string
+         */
+        public function getNombreUtilisateurs() : string {
+                $sql = 'SELECT COUNT(id_utilisateur) FROM role_utilisateur WHERE id_role = ' . $this->id;
+                $req = self::getPDO()->query($sql);
+                // on retourne directement la valeur
+                return $req->fetch(PDO::FETCH_NUM)[0];
+        }
 }
