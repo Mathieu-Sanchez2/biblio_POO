@@ -20,16 +20,20 @@ class RoleController extends Controller {
     public function index(){
         $roles = Role::select();
         // var_dump($roles);
-        $this->render('index', compact('roles'));
+        return $this->render('index', compact('roles'));
     }
+    
     
     /**
      * single
      * permet d'afficher la vue qui donne les informations sur un role
+     * @param  mixed $_id
      * @return void
      */
-    public function single(){
-
+    public function single($_id){
+        $role = Role::select($_id);
+        // var_dump($role);
+        return $this->render('single', compact('role'));
     }       
     
     /**
@@ -38,7 +42,7 @@ class RoleController extends Controller {
      * @return void
      */
     public function add(){
-
+        return $this->render('add');
     }
         
     /**
@@ -47,18 +51,22 @@ class RoleController extends Controller {
      * @return void
      */
     public function addValidPostForm(){
-        
+        var_dump($_POST);
+        die('addValidPostForm');
+        return $this->render('add');
     }
     
     /**
      * update
-     * Permet de retourner la vue qui contient le formulaire de modification
+     * Permet de retourner la vue qui contient le formulaire de modification avec les informations bdd
+     * @param  mixed $_id
      * @return void
      */
     public function update($_id){
         $role = Role::select($_id);
         return $this->render('update', compact('role'));
-    }    
+    }
+
     /**
      * updateValidPostForm
      * Permet de valider les données recu du formulaire de modification
@@ -66,8 +74,11 @@ class RoleController extends Controller {
      */
     public function updateValidPostForm(){
         var_dump($_POST);
-        $role = new Role($_POST);var_dump($role);
+        die('updateValidPostForm');
+        $role = new Role($_POST);
         $role->update();
+        // avec message d'information oui||non ? compact() ?
+        return $this->render('update');
     }    
     /**
      * delete
@@ -75,6 +86,8 @@ class RoleController extends Controller {
      * @return void
      */
     public function delete(){
-        
+        // model pour supprimer ?
+        // avec message d'information oui||non ? compact() ?
+        return $this->render('index');
     }
 }

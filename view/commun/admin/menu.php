@@ -1,4 +1,5 @@
-<ul class="nav nav-tabs">
+<div class="d-flex justify-content-between">
+<ul class="nav">
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Livre</a>
     <ul class="dropdown-menu">
@@ -14,3 +15,7 @@
     </ul>
   </li>
 </ul>
+<div class="btn_deco">
+  <a href="<?= LienHelper::getLien('AdminController', 'logout') ?>" class="btn btn-sm btn-dark">Déconnexion</a>
+</div>
+</div>

@@ -6,8 +6,14 @@ class Role extends Table{
         public $id;
         // stock le "nom" du role
         public $libelle;
-
-        public function __construct($data = [])
+        
+        /**
+         * __construct
+         *
+         * @param  ?array $data
+         * @return void
+         */
+        public function __construct(?array $data = [])
         {
                 foreach($data as $attr => $value){
                         if (property_exists('Role', $attr)){

@@ -1,7 +1,7 @@
 <?php
 
 class Table {
-    // ATTRIBUTES
+    // ATTRIBUTS
     // permet de stocker la table sur laquelle nous devont intéragir
     public static $table;
     // permet de stocker l'objet PDO de php
@@ -16,10 +16,6 @@ class Table {
 
 
     // METHODES
-    
-    public function __construct(){
-        
-    }
     
     /**
      * getPDO()
@@ -36,7 +32,7 @@ class Table {
     
     /**
      * getNomTable()
-     * permet d'actualiseret de la sauvegarder la valeur de l'attr nom et de retourne la table a utiliser
+     * permet d'actualiser et/ou de sauvegarder la valeur de l'attr table
      * @return void
      */
     public static function getNomTable() {
@@ -46,7 +42,7 @@ class Table {
     /**
      * select()
      * Permet de recuperer une ou plusieurs occurence(s) d'une table
-     * @return void
+     * @return array||Obj
      */
     public static function select($_id = null){
         if ($_id == null){
@@ -70,7 +66,7 @@ class Table {
      * Permet d'ajouter une occurences dans une table
      * @return bool
      */
-    public function insert(){
+    public function insert()  : bool {
         //LIVRES
         $class = get_class($this);
         $data = get_object_vars($this);
@@ -95,10 +91,10 @@ class Table {
     
     /**
      * update()
-     * Permet de modifier une occurences dans une table
-     * @return void
+     * Permet de modifier une occurence dans une table
+     * @return bool
      */
-    public function update(){
+    public function update() : bool {
                 //LIVRES
                 // permet de recuperer la classe qui fait l'appel
                 $class = get_class($this);
@@ -140,10 +136,10 @@ class Table {
     
     /**
      * delete()
-     * Permet de supprimer une occurences en bdd
-     * @return void
+     * Permet de supprimer une occurence dans une table
+     * @return bool
      */
-    public function delete(){
+    public function delete() : bool {
         var_dump($this);
         $sql = 'DELETE FROM ' . $this->getNomTable() . ' WHERE id = ? LIMIT 1';
         var_dump($sql);

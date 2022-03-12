@@ -10,6 +10,10 @@
         <a class="nav-link" href="<?= LienHelper::getLien('SiteController', 'livres') ?>">Liste des livres</a>
         <a class="nav-link" href="<?= LienHelper::getLien('SiteController', 'contact') ?>">Contact</a>
       </div>
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="<?= LienHelper::getLien('AdminController', 'login') ?>">Administration</a>
+      </div>
     </div>
   </div>
 </nav>
+<main class="flex-shrink-0">

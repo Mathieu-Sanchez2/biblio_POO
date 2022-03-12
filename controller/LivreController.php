@@ -50,16 +50,18 @@ class LivreController extends Controller{
         $livre = new Livre($_POST);
         // var_dump($livre);
         if($livre->insert()){
-            $this->index();
+            // avec message d'information oui||non ? compact() ?
+            return $this->index();
         }else{
-            $this->add();
+            // avec message d'information oui||non ? compact() ?
+            return $this->add();
         }
     }
         
     /**
      * update
      * Permet d'afficher le formulaire de modification avec les informations stocker en bdd
-     * @param  mixed $_id
+     * @param  string||int $_id
      * @return voids
      */
     public function update ($_id){
@@ -86,7 +88,10 @@ class LivreController extends Controller{
             $this->update($livre->id);
         }
     }
-    
+    public function single($_id){
+        $livre = Livre::select($_id);
+        return $this->render('single', compact('livre'));
+    }
     /**
      * delete
      * Permet de supprimer un livre en bdd
