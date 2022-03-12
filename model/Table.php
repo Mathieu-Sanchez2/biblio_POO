@@ -20,9 +20,9 @@ class Table {
     /**
      * getPDO()
      * Permet d'acceder a l'objet PDO
-     * @return void
+     * @return PDO
      */
-    public static function getPDO(){
+    public static function getPDO() : PDO {
         // INSTANCIATION DE PDO 
         if (self::$pdo == NULL){
             self::$pdo = new PDO(self::DSN, self::UTILISATEUR, self::MDP, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
@@ -33,9 +33,9 @@ class Table {
     /**
      * getNomTable()
      * permet d'actualiser et/ou de sauvegarder la valeur de l'attr table
-     * @return void
+     * @return string
      */
-    public static function getNomTable() {
+    public static function getNomTable() : string {
         self::$table = strtolower(get_called_class());
         return self::$table;
     }
@@ -44,7 +44,7 @@ class Table {
      * Permet de recuperer une ou plusieurs occurence(s) d'une table
      * @return array||Obj
      */
-    public static function select($_id = null){
+    public static function select($_id = null) {
         if ($_id == null){
             $sql = "SELECT * FROM " . self::getNomTable();
         }else{

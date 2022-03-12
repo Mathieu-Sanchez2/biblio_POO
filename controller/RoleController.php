@@ -7,7 +7,7 @@ class RoleController extends Controller {
      *
      * @return void
      */
-    public function __construct(){
+    public function __construct() {
         $this->path_view = 'view/role/';
         $this->path_view_communes = 'view/commun/admin/';
     }
@@ -15,9 +15,9 @@ class RoleController extends Controller {
     /**
      * index
      * permet de retourner la vue pour avoir la liste des roles
-     * @return void
+     * @return string
      */
-    public function index(){
+    public function index() : string {
         $roles = Role::select();
         // var_dump($roles);
         return $this->render('index', compact('roles'));
@@ -27,10 +27,10 @@ class RoleController extends Controller {
     /**
      * single
      * permet d'afficher la vue qui donne les informations sur un role
-     * @param  mixed $_id
-     * @return void
+     * @param  string $_id
+     * @return string
      */
-    public function single($_id){
+    public function single(string $_id) : string {
         $role = Role::select($_id);
         // var_dump($role);
         return $this->render('single', compact('role'));
@@ -39,18 +39,18 @@ class RoleController extends Controller {
     /**
      * add
      * Permet d'afficher le formulaire d'ajout d'un role
-     * @return void
+     * @return string
      */
-    public function add(){
+    public function add() : string {
         return $this->render('add');
     }
         
     /**
      * addValidPostForm
      * Permet de valider les données recu du formulaire d'ajout
-     * @return void
+     * @return string
      */
-    public function addValidPostForm(){
+    public function addValidPostForm() : string {
         var_dump($_POST);
         die('addValidPostForm');
         return $this->render('add');
@@ -59,10 +59,10 @@ class RoleController extends Controller {
     /**
      * update
      * Permet de retourner la vue qui contient le formulaire de modification avec les informations bdd
-     * @param  mixed $_id
-     * @return void
+     * @param  string $_id
+     * @return string
      */
-    public function update($_id){
+    public function update(string $_id) : string {
         $role = Role::select($_id);
         return $this->render('update', compact('role'));
     }
@@ -70,9 +70,9 @@ class RoleController extends Controller {
     /**
      * updateValidPostForm
      * Permet de valider les données recu du formulaire de modification
-     * @return void
+     * @return string
      */
-    public function updateValidPostForm(){
+    public function updateValidPostForm() : string {
         var_dump($_POST);
         die('updateValidPostForm');
         $role = new Role($_POST);
@@ -83,11 +83,14 @@ class RoleController extends Controller {
     /**
      * delete
      * Permet de supprimer un role en bdd
-     * @return void
+     * @param string $_id
+     * @return string
      */
-    public function delete(){
+    public function delete(string $_id) : string {
         // model pour supprimer ?
-        // avec message d'information oui||non ? compact() ?
-        return $this->render('index');
+        $role = Role::select($_id);
+        $role->delete();
+        // message d'erreur ?
+        return $this->index();
     }
 }

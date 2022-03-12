@@ -17,8 +17,14 @@ class Utilisateur extends Table{
     public $role;
 
 
-    // METHODES
-    public function __construct($_data = []) {
+    // METHODES    
+    /**
+     * __construct
+     *
+     * @param  ?array $_data
+     * @return void
+     */
+    public function __construct(?array $_data = []) {
         foreach($_data as $attr => $value){
             if (property_exists('Utilisateur', $attr)){
                 $this->$attr = $value;

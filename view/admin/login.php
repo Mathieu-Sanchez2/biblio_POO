@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="text-center">Formulaire de connexion a l'administration</h1>
+    <h1 class="text-center mt-3">Formulaire de connexion a l'administration</h1>
     <form action="<?= LienHelper::getLien('AdminController', 'checkLoginPostForm'); ?>" method="post">
         <div class="mb-3">
             <label for="mail" class="form-label">Mail :</label>

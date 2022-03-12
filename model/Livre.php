@@ -18,12 +18,14 @@ class Livre extends Table{
     
 
     // METHODES (actions)
+    
     /**
      * __construct
      * Permet d'attribuer les valeurs dans les attributs lors de l'instanciation
+     * @param  ?array $data
      * @return void
      */
-    public function __construct($data = []) {
+    public function __construct(?array $data = []) {
         foreach($data as $attr => $value){
             if (property_exists('Livre', $attr)){
                 $this->$attr = $value;
@@ -103,7 +105,7 @@ class Livre extends Table{
      * Retourne une chaine de caractères par rapport a la valeur stocker dans disponibilité
      * @return string
      */
-    public function getDisponibilite() : string{
+    public function getDisponibilite() : string {
         if ($this->disponibilite == 0){
             return 'Disponible';
         }

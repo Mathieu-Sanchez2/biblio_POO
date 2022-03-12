@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="text-center">Contact du site web de la bibliotheque</h1>
+    <h1 class="text-center mt-3">Contact du site web de la bibliotheque</h1>
     <form method="POST" action="<?= LienHelper::getLien('SiteController', 'contactValidPostForm'); ?>">
         <div class="row">
             <div class="col">

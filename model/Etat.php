@@ -4,9 +4,6 @@ class Etat extends Table {
     
     public $id;
     public $libelle;
-
-
-
     
     /**
      * __construct

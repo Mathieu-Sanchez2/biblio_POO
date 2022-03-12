@@ -3,9 +3,9 @@
 class Controller {
     // ATTR 
     // permet de stocker le chemin du dossier des vues
-    public $path_view = 'view/';
+    public string $path_view = 'view/';
     // permet de stocker le chemin du dossier des vues communes aux modules 
-    public $path_view_communes = 'view/commun/';
+    public string $path_view_communes = 'view/commun/';
 
     // METHODES 
     /**
@@ -13,9 +13,9 @@ class Controller {
      *  Permet de rendre une vue, avec possibilité de passer des informations
      * @param  string $vue
      * @param  ?array $data
-     * @return void
+     * @return string
      */
-    public function render(string $vue,?array $data = []) {
+    public function render(string $vue,?array $data = []) : string {
         // var_dump($data);
         ob_start();
             extract($data);

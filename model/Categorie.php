@@ -26,7 +26,7 @@ class Categorie extends Table{
      * retourne les livres liés a une catégorie
      * @return void
      */
-    public function getLivres(){
+    public function getLivres() {
         
     }
 }

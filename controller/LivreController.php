@@ -2,8 +2,13 @@
 
 class LivreController extends Controller{
 
-    public function __construct()
-    {
+    
+    /**
+     * __construct
+     *
+     * @return void
+     */
+    public function __construct() {
         $this->path_view = 'view/livre/';
         $this->path_view_communes = 'view/commun/admin/';
     }
@@ -11,9 +16,9 @@ class LivreController extends Controller{
     /**
      * index
      * Permet de recuperer les informations nécessaire a l'affichage de l'index et de retourner la vue
-     * @return void
+     * @return string
      */
-    public function index(){
+    public function index() : string {
         // verif si l'user peut voir la page ou pas
         // doit demander au model livre de recup les livres en BDD
         if (!Utilisateur::isConnect()){
@@ -32,9 +37,9 @@ class LivreController extends Controller{
     /**
      * add
      * Permet de retourner la vue pour la page add qui permet d'ajouter un livre en bdd
-     * @return void
+     * @return string
      */
-    public function add(){
+    public function add() : string {
         // retourne la vue qui contient le formulaire pour ajouter un livre en bdd
         return $this->render('add');
     } 
@@ -42,9 +47,9 @@ class LivreController extends Controller{
     /**
      * addValidPostForm
      * Permet de valider les données reçu depuis le formulaire d'ajout et apres validation d'ajouter en bdd
-     * @return void
+     * @return string
      */
-    public function addValidPostForm(){
+    public function addValidPostForm() : string {
         // Permet de valider les données recu du formulaire d'ajout et de faire l'insertion en BDD
         // var_dump($_POST);
         $livre = new Livre($_POST);
@@ -61,10 +66,10 @@ class LivreController extends Controller{
     /**
      * update
      * Permet d'afficher le formulaire de modification avec les informations stocker en bdd
-     * @param  string||int $_id
-     * @return voids
+     * @param  string $_id
+     * @return string
      */
-    public function update ($_id){
+    public function update (string $_id) : string {
         // retourne la vue qui contient le formulaire de modification
         $livre = Livre::select($_id);
         // var_dump($livre);
@@ -74,30 +79,36 @@ class LivreController extends Controller{
     /**
      * updateValidForm
      * Permet de valider les donées reçu du formulaire de modification et de faire l'update en bdd
-     * @return void
+     * @return string
      */
-    public function updateValidForm() {
+    public function updateValidForm() : string {
         // Permet de valider les données recu du formulaire de modification et de faire l'update en BDD
         // var_dump($_POST);
         $livre = new Livre($_POST);
-        // $livre->disponibilite = 0;
         // var_dump($livre);
         if ($livre->update()){
-            $this->index();
-        }else{
-            $this->update($livre->id);
+            return $this->index();
         }
+        return $this->update($livre->id);
     }
-    public function single($_id){
+        
+    /**
+     * single
+     * Permet d'afficher la fiche d'un livre
+     * @param  string $_id
+     * @return string
+     */
+    public function single(string $_id) : string {
         $livre = Livre::select($_id);
         return $this->render('single', compact('livre'));
     }
+
     /**
      * delete
      * Permet de supprimer un livre en bdd
-     * @return void
+     * @return string
      */
-    public function delete ($_id) {
+    public function delete (string $_id) : string {
         // action de suppr un livre en bdd
         $livre = Livre::select($_id);
         $livre->delete();

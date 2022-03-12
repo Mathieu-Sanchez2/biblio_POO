@@ -15,18 +15,18 @@ class SiteController extends Controller {
     /**
      * index
      * Retourne la pge d'index du site web
-     * @return void
+     * @return string
      */
-    public function index() {
+    public function index() : string {
         return $this->render('index');
     }
     
     /**
      * livres
      * Retourne la page livres du site web
-     * @return void
+     * @return string
      */
-    public function livres() {
+    public function livres() : string {
         $livres = Livre::select();
         return $this->render('livres', compact('livres'));
     }
@@ -34,9 +34,9 @@ class SiteController extends Controller {
     /**
      * contact
      * Retourne la page de contact du site web (formulaire de contact)
-     * @return void
+     * @return string
      */
-    public function contact() {
+    public function contact()  : string {
         return $this->render('contact');
     }
 
@@ -44,9 +44,9 @@ class SiteController extends Controller {
     /**
      * contactValidPostForm
      * Recupere et traite les données reçu du formulaire de contact du site web
-     * @return void
+     * @return string
      */
-    public function contactValidPostForm() {
+    public function contactValidPostForm() : string {
         var_dump($_POST);
         die('contactValidPostForm');
         // traitement des données ?
@@ -58,13 +58,12 @@ class SiteController extends Controller {
     /**
      * single
      * Retourne la page single du site web (fiche d'un livre)
-     * @param  mixed $_id
-     * @return void
+     * @param  string $_id
+     * @return string
      */
-    public function single($_id)
-    {
+    public function single(string $_id) : string {
         $livre = Livre::select($_id);
-        $this->render('single', compact('livre'));
+        return $this->render('single', compact('livre'));
     }
     
 }

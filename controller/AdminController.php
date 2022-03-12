@@ -14,16 +14,15 @@ class AdminController extends Controller {
         $this->path_view = 'view/admin/';
         $this->path_view_communes = 'view/commun/admin/';
         $this->connexion = Utilisateur::isConnect();
-
     }
     
     /**
      * index
      * Affiche l'index de l'administration si l'utilisateur est connecté, 
      * sinon le formulaire de connexion
-     * @return void
+     * @return string
      */
-    public function index() {
+    public function index() : string {
         if (!$this->connexion){
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return $this->render('login');
@@ -35,9 +34,9 @@ class AdminController extends Controller {
     /**
      * login
      * Retourne le formulaire de connexion a l'administration
-     * @return void
+     * @return string
      */
-    public function login() {
+    public function login() : string {
         if ($this->connexion){
             // si l'utilisateur est déjà connecté ont le redirige vers l'index de l'administration
             return $this->render('index');
@@ -48,9 +47,9 @@ class AdminController extends Controller {
     /**
      * logout
      *  Permet a un utilisateur d'effectuer une déconnexion
-     * @return void
+     * @return string
      */
-    public function logout() {
+    public function logout() : string {
         // on recupere notre utilisateur sous forme d'objet (enregistrer au format string dans la session lors de la connexion)
         $utilisateur = unserialize($_SESSION['utilisateur']);
         // deconnexion de l'utilisateur
@@ -63,9 +62,9 @@ class AdminController extends Controller {
      * checkLoginPostForm
      * Recupere et traite les données reçu du formulaire de connexion
      * Contient la logique de la connexion (recuperer un utilisateur, verifier le mdp, etablier la connexion, etc)
-     * @return void
+     * @return string
      */
-    public function checkLoginPostForm() {
+    public function checkLoginPostForm() : string {
         // TRAITEMENT FORMULAIRE
         // var_dump($_POST);
         $mail = htmlentities($_POST['mail']);

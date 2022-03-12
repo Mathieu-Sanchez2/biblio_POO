@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="text-center">Fiche d'un livre du site web de la bibliotheque</h1>
+    <h1 class="text-center mt-3">Fiche d'un livre du site web de la bibliotheque</h1>
     <div class="p-2 mb-4 bg-light rounded-3">
         <div class="container-fluid py-5">
             <h1 class="display-5 fw-bold"><?= $livre->titre; ?></h1>

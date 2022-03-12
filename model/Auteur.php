@@ -22,7 +22,7 @@ class Auteur extends Table {
      * 
      * @return ?array
      */
-    public function __construct(?array $data = []){
+    public function __construct(?array $data = []) {
         foreach($data as $attr => $value){
             if (property_exists('Auteur', $attr)){
                     $this->$attr = $value;
@@ -35,7 +35,7 @@ class Auteur extends Table {
      * Permet de récuperé le(s) livre(s) lié a l'auteur
      * @return void
      */
-    public function getLivres(){
+    public function getLivres() {
         
     }
 }
