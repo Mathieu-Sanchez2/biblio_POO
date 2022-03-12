@@ -4,8 +4,8 @@
 
 ## Sommaire :
 - [Contexte](readme.md#contexte)    
-  - [Le projet](readme.md#Projet)    
-  - [Les prérequis](readme.md#Prérequis)  
+  - [Le projet](readme.md##Projet)    
+  - [Les prérequis](readme.md##Prérequis)  
 
 
 ## Contexte :
