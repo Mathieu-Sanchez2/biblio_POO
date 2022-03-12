@@ -2,17 +2,22 @@
 
 class LienHelper {
     // ATTRR
+    public static $url = "http://localhost/biblio_POO/index.php";
 
-
-    // METHODES
-    public static function getLien($_controller, $_methode, $_id = null) {
-        # http://localhost/biblio_POO/index.php?controller=LivreController&methode=index
-        # http://localhost/biblio_POO/index.php?controller=LivreController&methode=index&id=1
+    // METHODES    
+    /**
+     * getLien
+     * Permet de generer facilement une URL
+     * @param  string $_controller
+     * @param  string $_methode
+     * @param  ?string $_id
+     * @return string
+     */
+    public static function getLien(string $_controller, string $_methode, ?string $_id = null) : string {
         if ($_id != null) {
-            return "http://localhost/biblio_POO/index.php?controller=$_controller&methode=$_methode&id=$_id";
+            return self::$url . "?controller=$_controller&methode=$_methode&id=$_id";
         }
-        return "http://localhost/biblio_POO/index.php?controller=$_controller&methode=$_methode";
-        
+        return self::$url . "?controller=$_controller&methode=$_methode";
     }
 
 }

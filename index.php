@@ -3,8 +3,10 @@
     // var_dump($_GET);
     require_once 'autoloader.php';
 
-    // TODO: voir la page index et login du module d'administration
-    // TODO: voir config
+    // TODO: voir config (class + fichier)
+    // TODO: voir composer && packagist (+ whoops : https://github.com/filp/whoops)
+    // TODO: voir routeur
+    // TODO: voir namespace
 
     // si il existe un controller a instancier
     if (isset($_GET['controller'])) {
@@ -24,7 +26,7 @@
         }else{
             $controller->$methode();
         }
-    }else{
+    }else {
         // SINON par défaut la page a afficher est l'index du module livre (pour le moment)
         (new SiteController())->index(); // syntaxe pour ne pas avoir a stocker un objet dans une variable pour utiliser une méthode
     }
