@@ -5,6 +5,9 @@
         <img src="img/admin/dashboard.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
         Tableau de bord
       </a>
+      <a class="navbar-brand text-light " href="<?= LienHelper::getLien('SiteController', 'index'); ?>">
+        Site web
+      </a>
     </li>
     <!-- <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Location</a>

@@ -51,8 +51,12 @@ class LivreController extends Controller{
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
+        $categories = Categorie::select();
+        $auteurs = Auteur::select();
+        $editeurs = Editeur::select();
+        // var_dump($categories, $auteurs);
         // retourne la vue qui contient le formulaire pour ajouter un livre en bdd
-        return $this->render('add');
+        return $this->render('add', compact('categories', 'auteurs', 'editeurs'));
     } 
 
     /**
@@ -66,27 +70,53 @@ class LivreController extends Controller{
             return (new AdminController)->render('login');
         }
         // var_dump($_POST, $_FILES);
-        // TRAITEMENT DE L'IMAGE
+        $livre = new Livre($_POST);
+        // var_dump($livre);
+        // ne pas oublié d'indiquer l'illustration car c'est $_FILES et pas $_POST qui a l'info
+        $livre->illustration = $_FILES['illustration']['name'];
+        // var_dump($livre);
+        // *** TRAITEMENT DE L'IMAGE ***
         // on passe $_FILES pour que la fonction récupere les données du formulaire
         if (!Livre::addIllustrationOnDir($_FILES)) {
             // erreur : illustration non déplacé
-            die('deplacement illustration nok');
+            // die('Controller : deplacement illustration nok');
             // avec message d'information oui||non ? compact() ?
             return $this->add();
         };
-        // Permet de valider les données recu du formulaire d'ajout et de faire l'insertion en BDD
-        $livre = new Livre($_POST);
-        // var_dump($livre);
-        // ne pas oublier d'indiquer l'illustration car c'est $_FILES et pas $_POST qui a l'info
-        $livre->illustration = $_FILES['illustration']['name'];
-        // var_dump($livre);
-        if($livre->insert()){
-            // avec message d'information oui||non ? compact() ?
-            return $this->index();
-        }else{
-            // avec message d'information oui||non ? compact() ?
+        // TODO :: VOIR beginTransaction de PDO pour le requetage
+        if(!$livre->insert()){
+            // erreur ajout : redirection avec message d'information oui||non ? compact() ?
             return $this->add();
         }
+        // on stock l'id créer en base de données dans l'attribut id de l'objet livre
+        $livre->id = Livre::getPDO()->lastInsertId();
+        // var_dump($livre);
+        // on lie l'état neuf lors de l'ajout par defaut (champs chaché dans le formulaire)
+        if(!$livre->addEtatToLivre()){
+            // erreur ajout catégorie : redirection avec message d'information
+            // die('Controller : add etat nok');
+            return $this->add();
+        }
+        // on lie les catégories sélectionnés depuis le formulaire
+        if(!$livre->addCategorieToLivre()){
+            // erreur ajout catégorie : redirection avec message d'information
+            // die('Controller : add categorie nok');
+            return $this->add();
+        }
+        // on lie les auteur sélectionnés depuis le formulaire
+        if(!$livre->addAuteurToLivre()){
+            // erreur ajout auteur : redirection avec message d'information
+            // die('Controller : add auteur nok');
+            return $this->add();
+        }
+        // on lie la maison d'édition sélectionné depuis le formulaire
+        if(!$livre->addEditionToLivre()){
+            // erreur ajout edition : redirection avec message d'information
+            // die('Controller : add edition nok');
+            return $this->add();
+        }
+        // on redirige sur la fiche du livre
+        return $this->single($livre->id);
     }
         
     /**

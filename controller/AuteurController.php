@@ -68,8 +68,18 @@ class AuteurController extends Controller {
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
-        var_dump($_POST);
-        die('addValidPostForm');
+        $auteur = new Auteur($_POST);
+        $auteur->photo = $_FILES['photo']['name'];
+        // gestion photo
+        if (!ImgHelper::addImgOnDirectory($_FILES, 'photo')) {
+            # ERREUR : probleme ajout img
+            return $this->add();
+        }
+        if (!$auteur->insert()) {
+            # ERREUR : impossible d'ajouter l'auteur en bdd
+            return $this->add();
+        }
+        return $this->index();
     }
     
     /**
@@ -97,8 +107,8 @@ class AuteurController extends Controller {
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
-        var_dump($_POST);
-        die('updateValidPostForm');
+        var_dump($_POST, $_FILES);
+        die('TODO : updateValidPostForm');
     }
     
     /**

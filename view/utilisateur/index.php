@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th scope="col">ID</th>
+        <th scope="col">Role(s)</th>
         <th scope="col">Nom</th>
         <th scope="col">Prénom</th>
         <th scope="col">Adresse</th>
@@ -17,6 +18,7 @@
       <?php foreach($utilisateurs as $utilisateur) : ?>
           <tr>
               <td><?= $utilisateur->id  ?></td>
+              <td><?= $utilisateur->getListeRole(); ?></td>
               <td><?= $utilisateur->nom  ?></td>
               <td><?= $utilisateur->prenom  ?></td>
               <td><?= $utilisateur->adresse . ', ' . $utilisateur->code_postal . ' ' . $utilisateur->ville  ?></td>

@@ -68,8 +68,13 @@ class EditeurController extends Controller {
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
-        var_dump($_POST);
-        die('addValidPostForm');
+        // var_dump($_POST);
+        $editeur = new Editeur($_POST);
+        // var_dump($editeur);
+        if (!$editeur->insert()) {
+            return $this->add();
+        }
+        return $this->index();
     }
     
     /**

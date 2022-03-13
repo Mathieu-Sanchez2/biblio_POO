@@ -68,8 +68,13 @@ class UsagerController extends Controller {
             // si l'utilisateur n'as pas fait de connexion ont le redirige vers le login de l'administration
             return (new AdminController)->render('login');
         }
-        var_dump($_POST);
-        die('addValidPostForm');
+        // var_dump($_POST);
+        $usager = new Usager($_POST);
+        // var_dump($usager);
+        if (!$usager->insert()) {
+            return $this->add();
+        }
+        return $this->index();
     }
     
     /**

@@ -74,7 +74,10 @@ class Table {
             //TRAITEMENT
             // var_dump($data);
             unset($data['etat'], $data['auteur'], $data['categorie'], $data['editeur']);
+        }else if ($class == 'Auteur'){
+            unset($data['livre']);
         }
+
         $drapeauPrepare = [];
         foreach ($data as $key => $value){
             $drapeauPrepare[] = '?';

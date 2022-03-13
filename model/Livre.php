@@ -31,12 +31,12 @@ class Livre extends Table{
                 $this->$attr = $value;
             }
         }
-        // if ($this->id != null){
-        //     $this->getAuteurs();
-        //     $this->getCategories();
-        //     $this->getEditeurs();
-        //     $this->getEtat();
-        // }
+        if ($this->id != null){
+            $this->getAuteurs();
+            $this->getCategories();
+            $this->getEditeurs();
+            $this->getEtat();
+        }
     }
     
     /**
@@ -90,13 +90,14 @@ class Livre extends Table{
     /**
      * getEtat
      * Recupere l'etat d'un livre
-     * @return string
+     * @return void
      */
-    public function getEtat() : string {
-        $sql = 'SELECT etat.libelle FROM etat_livre INNER JOIN etat ON etat_livre.id_etat = etat.id WHERE etat_livre.id_livre = ?';
+    public function getEtat() {
+        $sql = 'SELECT etat.id, etat.libelle FROM etat_livre INNER JOIN etat ON etat_livre.id_etat = etat.id WHERE etat_livre.id_livre = ?';
         $req = self::getPDO()->prepare($sql);
         $req->execute([$this->id]);
-        $this->etat = $req->fetch(PDO::FETCH_ASSOC)['libelle'];
+        $req->setFetchMode(PDO::FETCH_CLASS, 'Etat');
+        $this->etat = $req->fetch();
         return $this->etat;
     }
 
@@ -165,5 +166,78 @@ class Livre extends Table{
         // erreur dans la suppresion de l'illustration
         return false;
     }
+    
+    /**
+     * addCategorieToLivre
+     * Lie un livre a une ou plusieurs catégorie(s) en bdd
+     * @return bool
+     */
+    public function addCategorieToLivre() : bool {
+        foreach ($this->categorie as $categorie){
+            $sql = "INSERT INTO categorie_livre VALUES (:id_categorie, :id_livre)";
+            $req = self::getPDO()->prepare($sql);
+            if (!$req->execute([':id_categorie' => $categorie, ':id_livre' => $this->id])) {
+                var_dump($req->errorInfo());
+                die('Error info categorie');
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * addAuteurToLivre
+     * Lie un livre a un ou plusieurs auteur en bdd
+     * @return bool
+     */
+    public function addAuteurToLivre() : bool {
+        if ($this->auteur != null) {
+            foreach ($this->auteur as $auteur){
+                $sql = "INSERT INTO auteur_livre VALUES (:id_auteur, :id_livre, NULL)";
+                $req = self::getPDO()->prepare($sql);
+                if (!$req->execute([':id_auteur' => $auteur, ':id_livre' => $this->id])) {
+                    var_dump($req->errorInfo());
+                    die('Error info auteur');
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
+     /**
+     * addEtatToLivre
+     * lie un livre a un etat en bdd
+     * @return bool
+     */
+    public function addEtatToLivre() : bool {
+        $sql = "INSERT INTO etat_livre VALUES (:id_livre, :id_etat)";
+        $req = self::getPDO()->prepare($sql);
+        if (!$req->execute([':id_livre' => $this->id, ':id_etat' => $this->etat])){
+            var_dump($req->errorInfo());
+            die('Error info etat');
+            return false;
+        }
+        return true;
+    }
+
+     /**
+     * addEditionToLivre
+     * lie un livre a une maison d'édition en bdd
+     * @return bool
+     */
+    public function addEditionToLivre() : bool {
+        if ($this->editeur != null) {
+            foreach ($this->editeur as $editeur){
+                $sql = "INSERT INTO editeur_livre VALUES (:id_editeur, :id_livre, NULL, NULL)";
+                $req = self::getPDO()->prepare($sql);
+                if (!$req->execute([':id_editeur' => $editeur,':id_livre' => $this->id])) {
+                    var_dump($req->errorInfo());
+                    die('Error info editeur');
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * LienHelper
+ */
 class LienHelper {
     // ATTRR
     public static $url = "http://localhost/biblio_POO/index.php";

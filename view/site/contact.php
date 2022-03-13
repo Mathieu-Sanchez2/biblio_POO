@@ -1,6 +1,7 @@
 <div class="container">
     <h1 class="text-center mt-3">Contact du site web de la bibliotheque</h1>
-    <form method="POST" action="<?= LienHelper::getLien('SiteController', 'contactValidPostForm'); ?>">
+    <p class="mt-3">Lorem ipsum dolor sit amet, consectetLorem ipsum dolor sit amet, consectetLorem ipsum dolor sit amet, consectetLorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectetLorem ipsum dolor sit amet, consectetLorem ipsum dolor sit amet, consectetLorem ipsum dolor sit amet, consectet</p>
+    <form method="POST" action="<?= LienHelper::getLien('SiteController', 'contactValidPostForm'); ?>" class="my-3">
         <div class="row">
             <div class="col">
                 <div class="mb-3">

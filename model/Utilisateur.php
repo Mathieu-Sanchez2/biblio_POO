@@ -46,6 +46,19 @@ class Utilisateur extends Table{
         $req->setFetchMode(PDO::FETCH_CLASS, 'Role');
         return $this->role = $req->fetchAll();
     }
+
+        
+    /**
+     * getListeRole
+     * recupere le ou les roles de l'utilisateur et retourne une chaine de caractères a afficher
+     * @return string
+     */
+    public function getListeRole() : string {
+        foreach($this->role as $role){
+            $_role[] = $role->libelle;
+        }
+        return implode('<br>', $_role);
+    }
     
     /**
      * login

@@ -1,5 +1,10 @@
 <div class="container">
-  <h1 class="text-center mt-3">Index livre</h1>
+  <div class="d-flex justify-content-between my-2">
+    <h1 class="text-center">Index livre</h1>
+    <div class="my-auto">
+      <a href="<?= LienHelper::getLien('LivreController', 'add'); ?>" class="btn btn-success">Ajouter un livre</a>
+    </div>
+  </div>
   <table class="table">
     <thead>
       <tr>

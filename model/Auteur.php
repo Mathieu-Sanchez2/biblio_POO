@@ -38,4 +38,13 @@ class Auteur extends Table {
     public function getLivres() {
         
     }
+
+        /**
+     * getSrcPhoto
+     * retourne le chemin pour acceder a la photo d'un auteur
+     * @return string
+     */
+    public function getSrcPhoto() : string {
+        return 'img/photo/' . $this->photo;
+    }
 }
